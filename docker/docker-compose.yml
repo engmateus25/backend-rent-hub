@@ -1,0 +1,40 @@
+version: '3'
+services:
+  rent-postgres:
+    image: postgres:16
+    container_name: postgres-rentdb
+    environment:
+      POSTGRES_USER: "rentdb"
+      POSTGRES_PASSWORD: "rentdb"
+      POSTGRES_DB: "rent"
+    volumes:
+      - ./create-tables.sql:/docker-entrypoint-initdb.d/01_create_tables.sql
+      - ./seed.sql:/docker-entrypoint-initdb.d/02_seed.sql
+    ports:
+      - 5441:5432
+    networks:
+      - rent-network
+    
+  rent-mosquitto:
+    image: eclipse-mosquitto
+    container_name: rent-mqtt5
+    ports:
+      - "1883:1883" #default mqtt port
+      - "9001:9001" #default mqtt port for websockets
+    volumes:
+      - ./config:/mosquitto/config:rw
+      - ./data:/mosquitto/data:rw
+      - ./log:/mosquitto/log:rw
+    restart: unless-stopped
+    networks:
+      - rent-network
+
+volumes:
+  config:
+  data:
+  log:
+
+networks:
+  rent-network:
+    name: rent-network
+    driver: bridge
