@@ -1,16 +1,16 @@
 from pydantic import BaseModel
-from datetime import datetime
 from uuid import UUID
-
+from datetime import datetime
 
 class UserBase(BaseModel):
     name: str
     email: str
 
+class UserCreate(UserBase):
+    password: str  # A senha será recebida no cadastro
 
-class UserRequest(UserBase):
-    password: str | None = None  # A senha será opcional, pois é usada apenas no cadastro
-
+class UserUpdate(UserBase):
+    pass
 
 class UserResponse(UserBase):
     id: UUID

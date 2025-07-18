@@ -1,6 +1,24 @@
+import os
+from pydantic_settings import BaseSettings
+
+
+class Settings(BaseSettings):
+    # Configuração do banco de dados
+    DATABASE_URL: str = "postgres://rentdb:rentdb@localhost:5441/rent"
+    
+    # Configuração do JWT
+    SECRET_KEY: str = os.getenv("SECRET_KEY", "mysecretkey")  # Defina uma chave secreta forte para produção
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30  # Tempo de expiração do token em minutos
+
+    class Config:
+        env_file = ".env"  # Arquivo de configuração de variáveis de ambiente
+
+settings = Settings()  # Criar a instância das configurações
 
 
 
+"""
 TORTOISE_ORM = {
     "connections": {
         "default": "postgres://rentdb:rentdb@localhost:5441/rent", 
@@ -12,3 +30,4 @@ TORTOISE_ORM = {
         },
     },
 }
+"""
