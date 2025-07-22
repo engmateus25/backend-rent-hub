@@ -13,11 +13,13 @@ class UserRepository(UserRepositoryInterface):
         )
         return user
 
+
     async def get_user_by_id(self, user_id: str):
         try:
             return await User.get(id=user_id)
         except DoesNotExist:
             return None
+
 
     async def update_user(self, user_id: str, user_data: UserUpdate):
         user = await User.get(id=user_id)

@@ -29,6 +29,22 @@ services:
     networks:
       - rent-network
 
+  rent-backend:
+    build: .
+    container_name: rent-backend
+    command: python3 -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - rent-network
+    depends_on:
+      - rent-postgres
+      - rent-mosquitto
+    environment:
+      DATABASE_URL: postgres://rentdb:rentdb@rent-postgres/rent
+
 volumes:
   config:
   data:

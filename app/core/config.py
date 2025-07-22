@@ -7,14 +7,14 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "postgres://rentdb:rentdb@localhost:5441/rent"
     
     # Configuração do JWT
-    SECRET_KEY: str = os.getenv("SECRET_KEY", "mysecretkey")  # Defina uma chave secreta forte para produção
+    SECRET_KEY: str = os.getenv("SECRET_KEY", "mysecretkey") 
     ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30  # Tempo de expiração do token em minutos
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30 
 
     class Config:
-        env_file = ".env"  # Arquivo de configuração de variáveis de ambiente
+        env_file = ".env"  
 
-settings = Settings()  # Criar a instância das configurações
+settings = Settings()  
 
 
 
