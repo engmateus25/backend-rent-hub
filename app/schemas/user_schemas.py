@@ -7,7 +7,7 @@ class UserBase(BaseModel):
     email: str
 
 class UserCreate(UserBase):
-    password: str  # A senha será recebida no cadastro
+    password: str
 
 class UserUpdate(UserBase):
     pass

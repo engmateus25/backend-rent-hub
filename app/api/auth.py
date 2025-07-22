@@ -11,18 +11,18 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 router = APIRouter()
 
-user_service = UserService(user_repository=UserRepository())  # Injeção de dependência
+user_service = UserService(user_repository=UserRepository())  
 
-# Função para gerar o token JWT
+
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return user_service.create_access_token(data, expires_delta)
 
-# Rota de Registro
+
 @router.post("/register", response_model=UserResponse)
 async def register(user_data: UserCreate):
     return await user_service.create_user(user_data)
 
-# Rota de Login (gera o JWT)
+
 @router.post("/login")
 async def login(user_data: UserCreate):
     user = await user_service.authenticate_user(user_data.email, user_data.password)
@@ -34,7 +34,7 @@ async def login(user_data: UserCreate):
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
-# Rota para obter informações do usuário autenticado
+
 @router.get("/me", response_model=UserResponse)
 async def read_users_me(current_user: UserResponse = Depends(oauth2_scheme)):
     return current_user

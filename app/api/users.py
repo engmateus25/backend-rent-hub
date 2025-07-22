@@ -5,15 +5,15 @@ from app.database.repositories.user_repository import UserRepository
 
 router = APIRouter()
 
-user_service = UserService(user_repository=UserRepository())  # Injeção de dependência
+user_service = UserService(user_repository=UserRepository())  
 
-# Rota para listar usuários
+
 @router.get("/users", response_model=list[UserResponse])
 async def get_users():
-    users = await User.all()  # Obter todos os usuários
+    users = await User.all()  
     return users
 
-# Rota para detalhes de um usuário específico
+
 @router.get("/users/{user_id}", response_model=UserResponse)
 async def get_user(user_id: str):
     user = await user_service.get_user(user_id)
@@ -21,7 +21,7 @@ async def get_user(user_id: str):
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
-# Rota para atualizar um usuário
+
 @router.patch("/users/{user_id}", response_model=UserResponse)
 async def update_user(user_id: str, user_data: UserUpdate):
     user = await user_service.get_user(user_id)
@@ -30,7 +30,7 @@ async def update_user(user_id: str, user_data: UserUpdate):
     updated_user = await user_service.update_user(user_id, user_data)
     return updated_user
 
-# Rota para excluir um usuário
+
 @router.delete("/users/{user_id}")
 async def delete_user(user_id: str):
     user = await user_service.get_user(user_id)

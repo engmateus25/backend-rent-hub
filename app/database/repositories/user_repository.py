@@ -3,12 +3,13 @@ from app.schemas.user_schemas import UserCreate, UserUpdate
 from app.database.interfaces.user_repository_interface import UserRepositoryInterface
 from tortoise.exceptions import DoesNotExist
 
+
 class UserRepository(UserRepositoryInterface):
     async def create_user(self, user_data: UserCreate):
         user = await User.create(
             name=user_data.name,
             email=user_data.email,
-            password_hash=user_data.password  # Lembre-se de criptografar a senha no Service
+            password_hash=user_data.password  # lembrar de criptografar a senha no Service também
         )
         return user
 
